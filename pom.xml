@@ -13,6 +13,7 @@
         <module>storage-app</module>
         <module>worker-app</module>
         <module>discovery-app</module>
+        <module>proxy-app</module>
     </modules>
 
     <parent>

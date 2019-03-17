@@ -1,5 +1,6 @@
 package io.graversen.distributed.hashing.worker.app.service;
 
+import io.graversen.distributed.hashing.worker.app.integration.StorageClient;
 import io.graversen.distributed.hashing.worker.app.model.HashingResult;
 import io.graversen.trunk.hashing.DigestUtils;
 import io.graversen.trunk.instrumentation.Instrumentation;
@@ -15,6 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class HashingService
 {
     private final DigestUtils digestUtils;
+    private final StorageClient storageClient;
 
     public HashingResult computeHashingResult(String algorithm, String plainText, int rounds)
     {
@@ -26,7 +28,10 @@ public class HashingService
                 measureHashingDuration(duration)
         );
 
-        return new HashingResult(hash, algorithm, rounds, duration.longValue());
+        final HashingResult hashingResult = new HashingResult(hash, algorithm, rounds, duration.longValue());
+        storageClient.storeHashingResult(hashingResult, algorithm);
+
+        return hashingResult;
     }
 
     private Callable<String> computeHash(String algorithm, String plainText, int rounds)

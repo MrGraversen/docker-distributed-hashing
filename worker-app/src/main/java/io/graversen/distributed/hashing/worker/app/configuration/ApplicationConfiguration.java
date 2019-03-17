@@ -13,7 +13,8 @@ import org.springframework.context.event.EventListener;
 @RequiredArgsConstructor
 @ComponentScan(basePackages = {
         "io.graversen.distributed.hashing.worker.app.api",
-        "io.graversen.distributed.hashing.worker.app.service"
+        "io.graversen.distributed.hashing.worker.app.service",
+        "io.graversen.distributed.hashing.worker.app.integration"
 })
 public class ApplicationConfiguration
 {

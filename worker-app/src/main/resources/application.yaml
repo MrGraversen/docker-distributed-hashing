@@ -1,5 +1,6 @@
-server:
-  port: 0
+port:
+  min: 8200
+  max: 8300
 
 spring:
   application:
@@ -11,6 +12,7 @@ eureka:
       defaultZone: http://localhost:8000/eureka
   instance:
     instance-id: ${spring.application.name}-${random.value}
+    prefer-ip-address: true
 
 management:
   endpoint:

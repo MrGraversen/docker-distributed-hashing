@@ -1,9 +1,12 @@
 package io.graversen.distributed.hashing.worker.app.model;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class HashingRequest
 {
-    private final String plainText;
+    private String plainText;
+    private int rounds;
 }

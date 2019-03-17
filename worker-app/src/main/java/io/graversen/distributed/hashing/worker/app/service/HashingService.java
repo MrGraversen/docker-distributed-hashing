@@ -7,6 +7,7 @@ import io.graversen.trunk.instrumentation.util.IMeasurementsBin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -15,14 +16,32 @@ public class HashingService
 {
     private final DigestUtils digestUtils;
 
-    public HashingResult computeHashingResult(String algorithm, String plainText)
+    public HashingResult computeHashingResult(String algorithm, String plainText, int rounds)
     {
         final AtomicLong duration = new AtomicLong(0);
+
         final String hash = Instrumentation.measure(
-                () -> digestUtils.computeHashHex(plainText, algorithm), null, (measureHashingDuration(duration))
+                computeHash(algorithm, plainText, rounds),
+                null,
+                measureHashingDuration(duration)
         );
 
-        return new HashingResult(hash, algorithm, duration.longValue());
+        return new HashingResult(hash, algorithm, rounds, duration.longValue());
+    }
+
+    private Callable<String> computeHash(String algorithm, String plainText, int rounds)
+    {
+        return () ->
+        {
+            String hash = "";
+
+            for (int i = 0; i < rounds; i++)
+            {
+                hash = digestUtils.computeHashHex(plainText, algorithm);
+            }
+
+            return hash;
+        };
     }
 
     private IMeasurementsBin measureHashingDuration(AtomicLong sink)

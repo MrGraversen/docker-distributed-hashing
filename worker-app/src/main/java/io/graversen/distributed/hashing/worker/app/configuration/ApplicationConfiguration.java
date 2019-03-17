@@ -10,7 +10,10 @@ import org.springframework.context.event.EventListener;
 
 @Configuration
 @RequiredArgsConstructor
-@ComponentScan(basePackages = {"io.graversen.distributed.hashing.worker.app.service"})
+@ComponentScan(basePackages = {
+        "io.graversen.distributed.hashing.worker.app.api",
+        "io.graversen.distributed.hashing.worker.app.service"
+})
 public class ApplicationConfiguration
 {
     @EventListener(ApplicationReadyEvent.class)

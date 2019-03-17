@@ -1,11 +1,16 @@
 package io.graversen.distributed.hashing.worker.app.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class HashingResult
 {
-    private final String hash;
-    private final String algorithm;
-    private final long duration;
+    private String hash;
+    private String algorithm;
+    private int rounds;
+    private long duration;
 }

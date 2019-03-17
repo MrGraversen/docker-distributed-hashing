@@ -7,8 +7,9 @@ spring:
 
 eureka:
   server:
-    eviction-interval-timer-in-ms: 0
     renewal-percent-threshold: 1
   client:
     register-with-eureka: false
     fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8000/eureka

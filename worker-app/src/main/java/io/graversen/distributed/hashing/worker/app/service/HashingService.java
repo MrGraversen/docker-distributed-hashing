@@ -28,7 +28,7 @@ public class HashingService
                 measureHashingDuration(duration)
         );
 
-        final HashingResult hashingResult = new HashingResult(hash, algorithm, rounds, duration.longValue());
+        final HashingResult hashingResult = new HashingResult(plainText, hash, algorithm, rounds, duration.longValue());
         storageClient.storeHashingResult(hashingResult, algorithm);
 
         return hashingResult;

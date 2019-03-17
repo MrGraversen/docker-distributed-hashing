@@ -33,11 +33,11 @@ public class HashingService
     {
         return () ->
         {
-            String hash = "";
+            String hash = plainText;
 
             for (int i = 0; i < rounds; i++)
             {
-                hash = digestUtils.computeHashHex(plainText, algorithm);
+                hash = digestUtils.computeHashHex(hash, algorithm);
             }
 
             return hash;

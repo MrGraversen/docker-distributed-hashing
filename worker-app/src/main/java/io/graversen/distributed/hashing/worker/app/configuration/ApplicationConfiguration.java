@@ -1,5 +1,6 @@
 package io.graversen.distributed.hashing.worker.app.configuration;
 
+import com.netflix.discovery.EurekaClient;
 import io.graversen.trunk.hashing.DigestUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -16,15 +17,23 @@ import org.springframework.context.event.EventListener;
 })
 public class ApplicationConfiguration
 {
+    private final EurekaClient eurekaClient;
+
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady()
     {
-        System.out.println("ApplicationConfiguration.onApplicationReady");
+
     }
 
     @Bean
     public DigestUtils digestUtils()
     {
         return new DigestUtils();
+    }
+
+    @Bean
+    public String instanceId()
+    {
+        return eurekaClient.getApplicationInfoManager().getInfo().getInstanceId();
     }
 }

@@ -1,0 +1,25 @@
+version: "3"
+services:
+
+  redis:
+    container_name: hashing-redis
+    image: redis:5.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+
+  cassandra:
+    container_name: hashing-cassandra
+    image: cassandra:3.11.0
+
+  worker-app:
+    image: docker-distributed-hashing/worker-app
+
+  storage-app:
+    image: docker-distributed-hashing/storage-app
+
+  discovery-app:
+    image: docker-distributed-hashing/discovery-app
+
+  proxy-app:
+    image: docker-distributed-hashing/proxy-app
+    ports:
+      - 9000:9000

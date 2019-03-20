@@ -4,10 +4,14 @@ import com.netflix.discovery.EurekaClient;
 import io.graversen.trunk.hashing.DigestUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+
+import java.util.Objects;
 
 @Configuration
 @RequiredArgsConstructor
@@ -19,11 +23,15 @@ import org.springframework.context.event.EventListener;
 public class ApplicationConfiguration
 {
     private final EurekaClient eurekaClient;
+    private final CacheManager cacheManager;
 
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady()
     {
-
+        cacheManager.getCacheNames().stream()
+                .map(cacheManager::getCache)
+                .filter(Objects::nonNull)
+                .forEach(Cache::clear);
     }
 
     @Bean

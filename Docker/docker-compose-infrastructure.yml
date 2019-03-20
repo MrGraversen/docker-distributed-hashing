@@ -1,13 +1,25 @@
-version: "3"
+version: "3.7"
+
 services:
   redis:
     container_name: hashing-redis
     image: redis:5.0-alpine
+    volumes:
+      - redis-volume
     command: ["redis-server", "--appendonly", "yes"]
     ports:
       - 6379:6379
+
   cassandra:
     container_name: hashing-cassandra
     image: cassandra:3.11.0
+    volumes:
+      - cassandra-volume
     ports:
       - 9042:9042
+
+volumes:
+  redis-volume:
+    external: false
+  cassandra-volume:
+    external: false

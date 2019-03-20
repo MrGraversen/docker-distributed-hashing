@@ -1,14 +1,18 @@
-version: "3"
+version: "3.7"
 services:
 
   redis:
     container_name: hashing-redis
     image: redis:5.0-alpine
+    volumes:
+      - redis-volume
     command: ["redis-server", "--appendonly", "yes"]
 
   cassandra:
     container_name: hashing-cassandra
     image: cassandra:3.11.0
+    volumes:
+      - cassandra-volume
 
   worker-app:
     image: docker-distributed-hashing/worker-app
@@ -23,3 +27,9 @@ services:
     image: docker-distributed-hashing/proxy-app
     ports:
       - 9000:9000
+
+volumes:
+  redis-volume:
+    external: false
+  cassandra-volume:
+    external: false
